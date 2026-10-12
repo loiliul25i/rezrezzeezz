@@ -42,12 +42,38 @@ foreach (var input in Directory.GetFiles(source, "*.ytd.xml"))
     var texture = XmlYtd.GetYtd(File.ReadAllText(input), Path.Combine(source, name));
     var bytes = texture.Save();
     var check = new YtdFile(); check.Load(bytes);
-    if (check.TextureDict?.Textures?.data_items?.Length != 1)
-        throw new Exception("Texture dictionary failed native roundtrip");
-    var atlas = check.TextureDict.Textures.data_items[0];
-    if (atlas.Width != 1024 || atlas.Height != 512 || atlas.Levels != 11)
-        throw new Exception("Decoded atlas dimensions or mip levels mismatch");
+    if (check.TextureDict?.Textures?.data_items?.Length != 33)
+        throw new Exception("Expected 33 separate material texture maps");
+    foreach(var map in check.TextureDict.Textures.data_items)
+        if (map.Width != 512 || map.Height != 512 || map.Levels != 10)
+            throw new Exception("Decoded material dimensions or mip levels mismatch");
     File.WriteAllBytes(Path.Combine(destination, name + ".ytd"), bytes);
     Console.WriteLine($"PASS {name}.ytd: {bytes.Length} bytes, native texture dictionary decode verified");
+}
+foreach (var input in Directory.GetFiles(source, "*.ycd.xml"))
+{
+    var name = Path.GetFileName(input).Replace(".ycd.xml", "");
+    var original = XmlYcd.GetYcd(File.ReadAllText(input));
+    var bytes = original.Save();
+    var check = new YcdFile(); RpfFile.LoadResourceFile(check, bytes, 46);
+    if (check.ClipMapEntries?.Length != 2 || check.AnimMapEntries?.Length != 2)
+        throw new Exception("Expected two custom strike clips and two animations");
+    foreach(var entry in check.AnimMapEntries)
+    {
+        var anim = entry.Animation;
+        if (anim.BoneIds.data_items.Length != 42 || anim.Frames < 60)
+            throw new Exception("Authored animation tracks/frames missing");
+        foreach(var sequence in anim.Sequences.data_items)
+        foreach(var track in sequence.Sequences)
+        for(int frame=0;frame<sequence.NumFrames;frame++)
+        {
+            var q=track.EvaluateQuaternion(frame);
+            if(Math.Abs(q.Length()-1)>0.001)throw new Exception("Non-unit decoded animation quaternion");
+        }
+    }
+    File.WriteAllBytes(Path.Combine(destination, name+".ycd"),bytes);
+    var validation=Path.Combine(source,"..","native_validation");Directory.CreateDirectory(validation);
+    File.WriteAllText(Path.Combine(validation,name+".roundtrip.xml"),YcdXml.GetXml(check));
+    Console.WriteLine($"PASS {name}.ycd: {bytes.Length} bytes; two authored clips, 42 tracks and all frame quaternions decoded");
 }
 if (drawables != 8) throw new Exception($"Expected five weapons and three magazines, got {drawables}");

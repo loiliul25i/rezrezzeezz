@@ -29,6 +29,17 @@ if Config.EnableDiagnostics then
                     tostring(loaded), clip, weapon.clip))
                 if loaded then SetModelAsNoLongerNeeded(model) end
             end
+            if Config.Melee.Enabled then
+                RequestAnimDict(Config.Melee.Dictionary)
+                local deadline = GetGameTimer() + 8000
+                while not HasAnimDictLoaded(Config.Melee.Dictionary) and GetGameTimer() < deadline do Wait(50) end
+                for name, settings in pairs(Config.Melee.Weapons) do
+                    local seconds = GetAnimDuration(Config.Melee.Dictionary, settings.clip)
+                    local ok = HasAnimDictLoaded(Config.Melee.Dictionary) and math.abs(seconds * 1000 - settings.duration) < 50
+                    print(('[hw_weapons] %s animation %s/%s | duree %.2fs'):format(
+                        ok and 'PASS' or 'FAIL', Config.Melee.Dictionary, settings.clip, seconds))
+                end
+            end
             print('[hw_weapons] Testez ensuite equipement, tir/frappe, rechargement, vue FPS et synchronisation a deux joueurs.')
         end)
     end, false)

@@ -3,6 +3,9 @@ from pathlib import Path
 import shutil
 import tempfile
 import unittest
+import hashlib
+import json
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('installer', ROOT / 'integration/install_ox.py')
@@ -85,5 +88,15 @@ class InstallerTests(unittest.TestCase):
         self.target.write_text('return {}')
         with self.assertRaises(ValueError): installer.install(self.ox)
         self.assertEqual(self.target.read_text(), 'return {}')
+
+    def test_known_older_pack_icon_is_backed_up_and_upgraded(self):
+        old = b'known-old-pack-icon'
+        dest = self.ox / 'web/images/WEAPON_HW_EMBER.png'
+        dest.write_bytes(old)
+        known = {'WEAPON_HW_EMBER.png': [hashlib.sha256(old).hexdigest()]}
+        with patch.object(installer.json, 'loads', return_value=known):
+            installer.install(self.ox)
+        self.assertEqual(dest.read_bytes(), (ROOT / 'integration/images/WEAPON_HW_EMBER.png').read_bytes())
+        self.assertTrue(any(p.read_bytes() == old for p in (self.ox / '.hw-backups').glob('WEAPON_HW_EMBER.png.*.bak')))
 
 if __name__ == '__main__': unittest.main()

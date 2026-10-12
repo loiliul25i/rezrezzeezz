@@ -1,15 +1,399 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <TextureDictionary>
   <Item>
-    <Name>hw_finish</Name>
+    <Name>hw_metal_d</Name>
     <Usage>DIFFUSE</Usage>
     <UsageFlags>0</UsageFlags>
     <Format>D3DFMT_DXT5</Format>
-    <FileName>hw_finish.dds</FileName>
+    <FileName>hw_metal_d.dds</FileName>
     <Unk32 value="0" />
     <ExtraFlags value="0" />
-    <Width value="1024" />
+    <Width value="512" />
     <Height value="512" />
-    <MipLevels value="11" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_metal_n</Name>
+    <Usage>NORMAL</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_metal_n.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_metal_s</Name>
+    <Usage>SPECULAR</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_metal_s.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_steel_d</Name>
+    <Usage>DIFFUSE</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_steel_d.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_steel_n</Name>
+    <Usage>NORMAL</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_steel_n.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_steel_s</Name>
+    <Usage>SPECULAR</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_steel_s.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_ember_d</Name>
+    <Usage>DIFFUSE</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_ember_d.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_ember_n</Name>
+    <Usage>NORMAL</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_ember_n.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_ember_s</Name>
+    <Usage>SPECULAR</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_ember_s.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_soul_d</Name>
+    <Usage>DIFFUSE</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_soul_d.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_soul_n</Name>
+    <Usage>NORMAL</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_soul_n.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_soul_s</Name>
+    <Usage>SPECULAR</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_soul_s.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_wood_d</Name>
+    <Usage>DIFFUSE</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_wood_d.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_wood_n</Name>
+    <Usage>NORMAL</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_wood_n.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_wood_s</Name>
+    <Usage>SPECULAR</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_wood_s.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_leather_d</Name>
+    <Usage>DIFFUSE</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_leather_d.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_leather_n</Name>
+    <Usage>NORMAL</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_leather_n.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_leather_s</Name>
+    <Usage>SPECULAR</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_leather_s.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_bone_d</Name>
+    <Usage>DIFFUSE</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_bone_d.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_bone_n</Name>
+    <Usage>NORMAL</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_bone_n.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_bone_s</Name>
+    <Usage>SPECULAR</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_bone_s.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_recess_d</Name>
+    <Usage>DIFFUSE</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_recess_d.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_recess_n</Name>
+    <Usage>NORMAL</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_recess_n.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_recess_s</Name>
+    <Usage>SPECULAR</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_recess_s.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_engraving_d</Name>
+    <Usage>DIFFUSE</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_engraving_d.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_engraving_n</Name>
+    <Usage>NORMAL</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_engraving_n.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_engraving_s</Name>
+    <Usage>SPECULAR</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_engraving_s.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_cloth_d</Name>
+    <Usage>DIFFUSE</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_cloth_d.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_cloth_n</Name>
+    <Usage>NORMAL</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_cloth_n.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_cloth_s</Name>
+    <Usage>SPECULAR</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_cloth_s.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_glass_d</Name>
+    <Usage>DIFFUSE</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_glass_d.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_glass_n</Name>
+    <Usage>NORMAL</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_glass_n.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
+  </Item>
+  <Item>
+    <Name>hw_glass_s</Name>
+    <Usage>SPECULAR</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_glass_s.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="512" />
+    <Height value="512" />
+    <MipLevels value="10" />
   </Item>
 </TextureDictionary>

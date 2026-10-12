@@ -1,0 +1,233 @@
+[
+  {
+    "name": "hw_metal_d",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_metal_n",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_metal_s",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_steel_d",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_steel_n",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_steel_s",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_ember_d",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_ember_n",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_ember_s",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_soul_d",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_soul_n",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_soul_s",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_wood_d",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_wood_n",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_wood_s",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_leather_d",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_leather_n",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_leather_s",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_bone_d",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_bone_n",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_bone_s",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_recess_d",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_recess_n",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_recess_s",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_engraving_d",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_engraving_n",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_engraving_s",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_cloth_d",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_cloth_n",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_cloth_s",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_glass_d",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_glass_n",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  },
+  {
+    "name": "hw_glass_s",
+    "width": 512,
+    "height": 512,
+    "mips": 10,
+    "format": "D3DFMT_DXT5"
+  }
+]

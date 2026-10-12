@@ -5,6 +5,7 @@ tools/NativeExporter/obj/
 *.blend1
 sources/native_validation/
 dist/*
-!dist/halloween_fivem_esx_ox_install.zip
-!dist/halloween_fivem_esx_ox_complete.zip
+!dist/halloween_fivem_esx_ox_v2_install.zip
+!dist/halloween_fivem_esx_ox_v2_complete.zip
 !dist/*.sha256
+previews/animation_frames/

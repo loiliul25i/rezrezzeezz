@@ -123,6 +123,11 @@ class LuaTests(unittest.TestCase):
             function RequestModel(hash) end
             function HasModelLoaded(hash) return true end
             function SetModelAsNoLongerNeeded(hash) end
+            function RequestAnimDict(dict) end
+            function HasAnimDictLoaded(dict) return true end
+            function GetAnimDuration(dict, clip)
+                return clip == 'axe_chop' and 1.10 or 1.40
+            end
         ''')
         self.lua.execute((ROOT / 'hw_weapons/client.lua').read_text())
         self.assertEqual(len(list(self.lua.globals().labels)), 5)

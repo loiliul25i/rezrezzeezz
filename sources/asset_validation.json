@@ -1,64 +1,81 @@
 {
+  "version": "2.0.0",
   "weapon_count": 5,
   "drawables": 8,
   "texture_dictionaries": 1,
-  "texture_mips": 11,
+  "material_maps": 33,
+  "texture_mips": 10,
+  "custom_animation_clips": 2,
+  "animation_tracks_per_clip": 42,
+  "smooth_normals": true,
+  "normal_and_specular_maps": true,
+  "shipping_lods": [
+    "High",
+    "Medium",
+    "Low"
+  ],
   "native_roundtrip_checked": true,
   "game_client_tested": false,
-  "total_stream_bytes": 1873193,
+  "total_stream_bytes": 14224475,
   "files": [
     {
       "file": "hw_finishes.ytd",
-      "bytes": 260618,
-      "sha256": "d0de604713897e7f992e7bb1e28651caafdfb45dc0e1ad42ef8f99cde6343497",
+      "bytes": 1059870,
+      "sha256": "ae6dbdd9af0655355e46a505eeb297d718ca529315080a8dc09c56e72efecefd",
       "resource_version": 13
     },
     {
+      "file": "hw_melee_v2.ycd",
+      "bytes": 41346,
+      "sha256": "e0f2d29bc5581ace81bf483e056fc758c9736a8e4f1c47f1249ced703dcf6312",
+      "resource_version": 46
+    },
+    {
       "file": "w_ar_hw_pumpkin.ydr",
-      "bytes": 156427,
-      "sha256": "118ea97ea9aa31fb15ea0c5fd93eee98cf7c79c40a1ccc0e89a9f68a6af3c8ee",
+      "bytes": 1820385,
+      "sha256": "6b4ba1209a23bad60436429a6c903bbd6089e970fc395addd2a4c79fd397b6fa",
       "resource_version": 165
     },
     {
       "file": "w_ar_hw_pumpkin_mag.ydr",
-      "bytes": 139876,
-      "sha256": "1a5ff85ae980124da3778139bf20fd927b5d182baac722e6b0ee523ce1b6d3e7",
+      "bytes": 69472,
+      "sha256": "8bbdc57982c90e372759ef1467c7bffab7fea3dc3a1d1416cccb963a486e741b",
       "resource_version": 165
     },
     {
       "file": "w_ar_hw_revenant.ydr",
-      "bytes": 318169,
-      "sha256": "66c7c262ad522dd42ef9cf7e319a86b9c210e3937966c2cab87ea38abb1de240",
+      "bytes": 1669754,
+      "sha256": "02c57de233b8eea607d525bd2ca6ac1a5af55c7823f28b14c70efd9717a50abc",
       "resource_version": 165
     },
     {
       "file": "w_ar_hw_revenant_mag.ydr",
-      "bytes": 40525,
-      "sha256": "0e0d9e4e9c774f71e50bdb28bf0d5398d145bb855ebfcf69f534ef4a855cdea2",
+      "bytes": 186493,
+      "sha256": "c5158f34debbb5c0aba8424df6db6139ad8bd40ee6ddc233ddc09660a4b7ae38",
       "resource_version": 165
     },
     {
       "file": "w_me_hw_reaper.ydr",
-      "bytes": 357629,
-      "sha256": "32519050eb5e58bc74c30c06dc2b050066b78e78a5b47aec0908b64d73f08b13",
+      "bytes": 4281537,
+      "sha256": "0115be00ec1bc1281401212033f9dd6f9a8103958ec4ae16676fcc5395044e54",
       "resource_version": 165
     },
     {
       "file": "w_me_hw_soul.ydr",
-      "bytes": 455396,
-      "sha256": "edbea98b0747954e922bbf5720f9701a980b675b1234b4d3ce5b58683cdf3cec",
+      "bytes": 3436680,
+      "sha256": "4eac94750b5cd951ce374f093d2952bc2449d52399d1e8baafc36031e1ccc3ef",
       "resource_version": 165
     },
     {
       "file": "w_pi_hw_ember.ydr",
-      "bytes": 138785,
-      "sha256": "ef387c9cca040a75060070b990bd25655eaa6b49a0f2dd0428438329d6f2b9b1",
+      "bytes": 1643344,
+      "sha256": "2d69c364252f0428665c45479e6151efea52c66676cb7d0028c7a450a20ed70a",
       "resource_version": 165
     },
     {
       "file": "w_pi_hw_ember_mag.ydr",
-      "bytes": 5768,
-      "sha256": "92316df9973cc46e9e2b7feab9af8b3b6bfc9755d5f71470335fad5ef3714ff4",
+      "bytes": 15594,
+      "sha256": "4c7dff07db107833efc97235c9f9254fa6707908656eeecd17db9d80704d2c15",
       "resource_version": 165
     }
   ]

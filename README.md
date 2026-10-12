@@ -1,7 +1,9 @@
-# Halloween weapon pack
+# Halloween Weapons V2
 
-Five original addon weapons for FiveM GTA V Legacy, ESX and ox_inventory: one pistol, one AR, one AK, one axe and one scythe.
+Five original addon weapons for FiveM GTA V Legacy, ESX + ox_inventory and OneSync: pistol, AR, AK, axe and scythe.
 
-Read [the French installation guide](README.fr.md). Native models, original textures, inventory icons, editable Blender/GLB sources and tests are included.
+V2 adds curved geometry, smooth weighted normals, separate diffuse/normal/specular maps, shipping LODs, and two authored melee animations with server-validated impacts.
 
-Asset decoding and local script checks were performed. FiveM client gameplay has not been tested; see [the validation report](VALIDATION.fr.md) before deployment.
+Read [the French installation and upgrade guide](README.fr.md). The `dist/` folder contains the V2 installation ZIP and the complete source ZIP. The actual model renders and Blender animation previews are in [previews/](previews/).
+
+Native assets and local Lua behavior are validated. GTA/FiveM gameplay remains untested; read [the validation report](VALIDATION.fr.md) before deployment.

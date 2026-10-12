@@ -1,0 +1,20 @@
+[
+  {
+    "clip": "axe_chop",
+    "kind": "axe",
+    "frames": 67,
+    "tracks": 42,
+    "duration": 1.1,
+    "contact": 0.56,
+    "max_hand_reach_error": 0.0
+  },
+  {
+    "clip": "scythe_sweep",
+    "kind": "scythe",
+    "frames": 85,
+    "tracks": 42,
+    "duration": 1.4,
+    "contact": 0.68,
+    "max_hand_reach_error": 0.0
+  }
+]

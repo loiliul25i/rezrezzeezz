@@ -1,39 +1,33 @@
-# Rapport de validation
+# Validation — Halloween Weapons V2
 
-État : **fichiers créés et vérifications locales réussies ; test en jeu non réalisé**.
-
-## Résultats
+État : **export natif et contrôles locaux réussis ; tests GTA V/FiveM non exécutés**.
 
 | Contrôle | Résultat |
 |---|---|
-| Modèles originaux | 5 sources Blender et 5 GLB générés |
-| Conversion au format GTA natif | 8 `.ydr` RSC7 version 165, 1 `.ytd` RSC7 version 13 |
-| Décodage après export | Les 8 modèles ont été relus avec CodeWalker ; géométries, nombre de triangles, shaders, poids et indices de squelette vérifiés |
-| Texture | Atlas original BC3/DXT5 de 1024 × 512, 11 mipmaps réels ; dictionnaire natif décodé |
-| Références entre fichiers | 5 identifiants d'armes, 3 chargeurs, 8 archetypes, texture partagée, libellés et icônes cohérents |
-| Rendus | Les cinq rendus des véritables modèles ont été inspectés ; UV et cadrage corrigés |
-| Icônes | 5 PNG RGBA de 256 × 256 |
-| Tests Lua 5.4 et installateur Python | **22 réussis**, 0 échec, 0 ignoré |
-| Table réelle ox_inventory | Installation sur une copie de la table actuelle : 108 armes existantes conservées, 5 ajoutées ; munitions présentes ; réinstallation et désinstallation vérifiées |
-| GTA V / client FiveM | **Non exécuté** |
-| Votre serveur ESX / réseau / persistance réelle | **Non exécuté** |
+| Sources 3D | Cinq modèles Blender et cinq GLB refaits ; poignées/chargeurs galbés, évidements, biseaux, lames courbes |
+| Normales / textures | Normales lissées pondérées et tangentes ; 33 cartes indépendantes diffuse/normal/specular, 512 × 512 avec 10 mipmaps réels |
+| Export GTA Legacy | 8 YDR version 165, 1 YTD version 13, 1 YCD version 46, tous binaires RSC7 |
+| Décodage natif | Tous les fichiers ont été relus dans CodeWalker après export |
+| LOD | High, Medium et Low pour les huit modèles ; références de shaders et comptes de triangles vérifiés après décodage |
+| Animations originales | Deux clips à 60 images/s, 42 pistes chacun ; 67 images pour la hache, 85 pour la faux |
+| Données des animations | Les quaternions de chaque image ont été décodés et vérifiés normalisés ; le rig/actions est modifiable dans Blender |
+| Prévisualisations | Cinq rendus inspectés ; mouvements prévisualisés sur un mannequin dans Blender, avec deux GIF livrés |
+| Scripts / installateur | **40 tests réussis**, aucun échec ni test ignoré ; Lua 5.4 réel avec mocks FiveM/ox_inventory |
+| Client GTA / FXServer | **Non exécuté** |
 
-Le test de la table ox_inventory lit les données dans Lua 5.4 en interprétant les littéraux de hash FiveM dans le banc d'essai. Il ne lance pas ox_inventory dans FXServer. Les tests de distribution utilisent des mocks des exports et des natives ; ils vérifient les branches de validation et les erreurs, mais ne prouvent pas les permissions ou la persistance sur votre serveur.
+Le stream fait environ **14.22 Mo**. Les fichiers, tailles et SHA-256 exacts figurent dans `sources/asset_validation.json`. L'export inclut les niveaux de détail et les matériaux utilisés dans le jeu ; il ne se limite pas aux GLB de présentation.
 
-Les tests couvrent la restriction ACE du manifeste de commande, la distribution des cinq armes, l'absence d'ammo pour la mêlée, les entrées manquantes, l'inventaire plein, les échecs d'ajout, les quantités invalides et le diagnostic client. L'installateur a été testé pour les sauvegardes, les conflits, les installations répétées, la conservation des changements sans rapport, la désinstallation et les encodages UTF-8 BOM/CRLF.
+Les 40 tests couvrent l'installation et le passage d'icônes connues V1 vers V2 avec sauvegarde, la conservation des définitions et icônes personnalisées, la réinstallation/désinstallation, les erreurs d'inventaire et la commande admin. Les tests de mêlée vérifient la nécessité d'une arme réellement équipée/possédée, le délai d'impact, le cooldown, la durabilité, les échanges de slot/arme, les cibles distantes ou derrière le joueur, les routing buckets, la déconnexion, les événements locaux forgés et les contrôles de visibilité/propriété du côté client. Le serveur fixe les dégâts et le timing ; il ne reçoit pas un montant de dégâts du joueur.
 
-## Outils effectivement utilisés
+**Ces tests emploient des mocks des natives et exports et ne remplacent pas l'exécution dans FiveM.** La lecture réelle des clips, l'alignement des mains sur différents peds, la vue FPS, les dégâts sur les entités réseau, l'attribution des morts et la synchronisation à deux joueurs restent à contrôler sur votre serveur. Les GIF sont rendus dans Blender, pas dans GTA.
 
-- Blender **4.3.2**, génération locale des géométries et rendus Cycles.
-- Python **3.12**, Pillow **12.3.0**, Lua **5.4** via lupa **2.8**.
-- .NET SDK **8.0.425**.
-- CodeWalker.Core, commit `485d56bec00262ed7fa472261cce7bbc6202b96e` du dépôt `dexyfex/CodeWalker`.
-- Table ox_inventory inspectée au commit `488aa6d754dfbf7d169f355ccbd647dc60c5ec3a` du dépôt `overextended/ox_inventory`.
+## Outils
 
-Le stream contient environ **1,87 Mo** de fichiers binaires non archivés. Les tailles et sommes SHA-256 exactes sont dans `sources/asset_validation.json`.
+- Blender 4.3.2 ; Python 3.12 ; Pillow 12.3.0 ; NumPy ; Lua 5.4 via lupa 2.8.
+- .NET SDK 8.0.425 ; CodeWalker.Core `485d56bec00262ed7fa472261cce7bbc6202b96e`.
+- Schéma ox_inventory inspecté à `488aa6d754dfbf7d169f355ccbd647dc60c5ec3a`.
+- Données de bind GTA de Sollumz : voir `third_party/README.md` et la licence incluse.
 
-## Tests restant sur FiveM
+## Limites restantes
 
-Suivre la procédure du guide : installer la ressource et les entrées ox_inventory, redémarrer le serveur, lancer `hw_check`, puis tester équipement, visée FPS, tir, rechargement, frappe, synchronisation à deux joueurs et reconnexion.
-
-La calibration dans les mains et les animations natives nécessitent un contrôle visuel en jeu. Les modèles utilisent des tags de squelette GTA et des clipsets stock ; cela ne remplace pas un test client. La version livrée est stylisée et n'a pas tous les détails de l'illustration de concept. GTA V Enhanced n'a pas été testé.
+La V2 suit la palette et les silhouettes de la référence et ajoute des détails sculptés, mais ne reproduit pas à l'identique tous les ornements de l'illustration. Les cinq rendus livrés permettent de voir les modèles réellement créés. GTA V Enhanced n'est pas vérifié. La gestion de mêlée demande OneSync et utilise des impacts scriptés, avec les conséquences d'intégration décrites dans le guide. Aucun résultat de test en jeu n'est revendiqué.

@@ -7,6 +7,7 @@ Only Python's standard library is required. Restart the server after installatio
 from pathlib import Path
 import argparse
 import hashlib
+import json
 import os
 import re
 import shutil
@@ -53,6 +54,8 @@ def install(ox, dry_run=False, uninstall=False):
             raise ValueError('Impossible de localiser une unique table Weapons. Utilisez ox_weapons_entries.lua manuellement.')
         at = anchors[0].end()
         updated = text[:at] + block + text[at:]
+    known_path=HERE/'known_icon_versions.json'
+    known=json.loads(known_path.read_text()) if known_path.exists() else {}
     files = []
     for name in NAMES:
         source = HERE / 'images' / (name + '.png')
@@ -60,7 +63,9 @@ def install(ox, dry_run=False, uninstall=False):
         if not source.is_file() or source.stat().st_size < 100:
             raise ValueError('Icone du pack absente ou vide: ' + source.name)
         if dest.exists() and dest.read_bytes() != source.read_bytes():
-            raise ValueError('Une icone differente porte deja ce nom; aucune icone ne sera ecrasee: ' + dest.name)
+            digest=hashlib.sha256(dest.read_bytes()).hexdigest()
+            if digest not in known.get(dest.name,[]):
+                raise ValueError('Une icone differente porte deja ce nom; aucune icone ne sera ecrasee: ' + dest.name)
         files.append((source, dest))
     new_raw = prefix + updated.encode('utf-8')
     if dry_run:
@@ -86,7 +91,12 @@ def install(ox, dry_run=False, uninstall=False):
     for source, dest in files:
         if uninstall:
             if dest.exists(): dest.unlink()
-        elif not dest.exists():
+        elif not dest.exists() or dest.read_bytes()!=source.read_bytes():
+            if dest.exists():
+                backups=ox/'.hw-backups';backups.mkdir(exist_ok=True)
+                digest=hashlib.sha256(dest.read_bytes()).hexdigest()[:16]
+                backup=backups/(dest.name+'.'+digest+'.bak')
+                if not backup.exists():shutil.copyfile(dest,backup)
             shutil.copyfile(source, dest)
     print('Pack retire.' if uninstall else 'Cinq definitions et cinq icones installees. Redemarrez le serveur.')
 

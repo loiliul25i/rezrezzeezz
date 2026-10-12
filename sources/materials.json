@@ -1,0 +1,90 @@
+[
+  {
+    "index": 0,
+    "name": "metal",
+    "metallic": 0.86,
+    "roughness": 0.29,
+    "specular": 175,
+    "emissive": false
+  },
+  {
+    "index": 1,
+    "name": "steel",
+    "metallic": 0.92,
+    "roughness": 0.24,
+    "specular": 210,
+    "emissive": false
+  },
+  {
+    "index": 2,
+    "name": "ember",
+    "metallic": 0.15,
+    "roughness": 0.4,
+    "specular": 85,
+    "emissive": true
+  },
+  {
+    "index": 3,
+    "name": "soul",
+    "metallic": 0.15,
+    "roughness": 0.4,
+    "specular": 90,
+    "emissive": true
+  },
+  {
+    "index": 4,
+    "name": "wood",
+    "metallic": 0.02,
+    "roughness": 0.52,
+    "specular": 42,
+    "emissive": false
+  },
+  {
+    "index": 5,
+    "name": "leather",
+    "metallic": 0.02,
+    "roughness": 0.72,
+    "specular": 25,
+    "emissive": false
+  },
+  {
+    "index": 6,
+    "name": "bone",
+    "metallic": 0.03,
+    "roughness": 0.4,
+    "specular": 65,
+    "emissive": false
+  },
+  {
+    "index": 7,
+    "name": "recess",
+    "metallic": 0.1,
+    "roughness": 0.65,
+    "specular": 18,
+    "emissive": false
+  },
+  {
+    "index": 8,
+    "name": "engraving",
+    "metallic": 0.78,
+    "roughness": 0.32,
+    "specular": 175,
+    "emissive": false
+  },
+  {
+    "index": 9,
+    "name": "cloth",
+    "metallic": 0.01,
+    "roughness": 0.9,
+    "specular": 12,
+    "emissive": false
+  },
+  {
+    "index": 10,
+    "name": "glass",
+    "metallic": 0.45,
+    "roughness": 0.16,
+    "specular": 210,
+    "emissive": false
+  }
+]

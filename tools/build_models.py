@@ -9,6 +9,8 @@ import bpy
 from mathutils import Vector, Quaternion
 import xml.etree.ElementTree as E
 import json
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parent))
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / 'sources'
@@ -24,20 +26,23 @@ METAL, SILVER, ORANGE, PURPLE, WOOD, LEATHER, IVORY, BLACK = range(8)
 objects = []
 mats = []
 
+MATERIALS=json.loads((SRC/'materials.json').read_text())
+
 def material(index):
-    m = bpy.data.materials.new(['Gunmetal', 'Steel', 'Ember', 'Soul', 'Charred wood', 'Leather', 'Bone', 'Recess'][index])
-    m.diffuse_color = PALETTE[index]
-    m.use_nodes = True
-    nodes = m.node_tree.nodes
-    p = nodes.get('Principled BSDF')
-    tex = nodes.new('ShaderNodeTexImage')
-    tex.image = bpy.data.images.load(str(SRC / 'textures' / 'hw_finish.png'), check_existing=True)
-    m.node_tree.links.new(tex.outputs['Color'], p.inputs['Base Color'])
-    p.inputs['Metallic'].default_value = .8 if index in (METAL, SILVER) else .12
-    p.inputs['Roughness'].default_value = .32 if index in (METAL, SILVER) else .62
-    if index in (ORANGE, PURPLE):
-        m.node_tree.links.new(tex.outputs['Color'], p.inputs['Emission Color'])
-        p.inputs['Emission Strength'].default_value = 1.4
+    info=MATERIALS[index];name=info['name']
+    m=bpy.data.materials.new(name);m.use_nodes=True
+    nodes=m.node_tree.nodes;p=nodes.get('Principled BSDF')
+    for suffix,socket in [('d','Base Color'),('n',None),('s',None)]:
+        tex=nodes.new('ShaderNodeTexImage');tex.image=bpy.data.images.load(str(SRC/'textures'/('hw_'+name+'_'+suffix+'.png')),check_existing=True)
+        if suffix!='d':tex.image.colorspace_settings.name='Non-Color'
+        if suffix=='d':
+            m.node_tree.links.new(tex.outputs['Color'],p.inputs['Base Color'])
+            if info['emissive']:
+                m.node_tree.links.new(tex.outputs['Color'],p.inputs['Emission Color']);p.inputs['Emission Strength'].default_value=.7
+        if suffix=='n':
+            normal=nodes.new('ShaderNodeNormalMap');normal.inputs['Strength'].default_value=.35
+            m.node_tree.links.new(tex.outputs['Color'],normal.inputs['Color']);m.node_tree.links.new(normal.outputs['Normal'],p.inputs['Normal'])
+    p.inputs['Metallic'].default_value=info['metallic'];p.inputs['Roughness'].default_value=info['roughness']
     return m
 
 def finish(obj, name, mat, bone=2, bevel=0):
@@ -51,7 +56,7 @@ def finish(obj, name, mat, bone=2, bevel=0):
     if bevel:
         modifier = obj.modifiers.new('Machined edges', 'BEVEL')
         modifier.width = bevel
-        modifier.segments = 2
+        modifier.segments = 4
         bpy.ops.object.modifier_apply(modifier=modifier.name)
     objects.append(obj)
     return obj
@@ -127,141 +132,6 @@ def skull(x,z,y=0,r=.025):
         for t in range(5):
             box('Tooth',(x+(t-2)*r*.22,sy,z-r*.74),(r*.17,.004,r*.23),IVORY,.0004)
 
-def pistol():
-    box('Lower frame',(-.010,0,.008),(.195,.035,.023),METAL)
-    box('Slide',(-.005,0,.035),(.210,.038,.031),METAL,.003,bone=3)
-    cylinder('Barrel',(0.076,0,.035),.009,.075,SILVER)
-    cylinder('Muzzle recess',(.113,0,.035),.0065,.001,BLACK)
-    polygon('Grip',[(-.066,.002),(-.032,-.011),(-.058,-.111),(-.102,-.111)],.033,IVORY,bevel=.003)
-    for side in (-1,1):
-        polygon('Grip dark inset',[(-.070,-.027),(-.043,-.030),(-.061,-.103),(-.094,-.103)],.0015,LEATHER,side*.018)
-    box('Grip bottom',(-.077,0,-.112),(.052,.039,.009),METAL)
-    line('Trigger guard',[(-.032,0,.002),(.020,0,-.007),(.027,0,-.033),(-.049,0,-.033)],.003,METAL)
-    box('Trigger',(-.011,0,-.013),(.005,.007,.020),ORANGE,.001,rotation=.22,bone=4)
-    for x in [-.090,-.081,-.072,-.063,.063,.072,.081]:
-        box('Slide serration',(x,-.020,.035),(.003,.002,.022),SILVER,.0002,bone=3)
-        box('Slide serration',(x,.020,.035),(.003,.002,.022),SILVER,.0002,bone=3)
-    for x in [-.086,.088]:
-        box('Sight',(x,0,.056),(.012,.013,.011),BLACK,.0005,bone=3)
-        box('Sight ember',(x,0,.062),(.003,.005,.003),ORANGE,0,bone=3)
-    line('Ember slide edge',[(-.103,-.021,.049),(.097,-.021,.049)],.0009,ORANGE,3)
-    line('Ember slide edge',[(-.103,.021,.049),(.097,.021,.049)],.0009,ORANGE,3)
-    pumpkin(.026,.035,.021,.011,3)
-    pumpkin(-.069,-.063,.020,.013)
-    for x in [-.082,-.063]: bolt(x,-.031,.019,.002)
-    start=len(objects)
-    box('Ember magazine',(-.071,0,-.074),(.028,.025,.087),METAL,.001)
-    box('Ember magazine plate',(-.077,0,-.120),(.047,.033,.007),ORANGE,.001)
-    for obj in objects[start:]: obj['magazine']=True
-    return (.114,0,.035),(-.061,0,-.013)
-
-def rifle(ak=False):
-    accent=ORANGE if ak else PURPLE
-    box('Receiver',(.016,0,.043),(.268,.052,.058),METAL,.003)
-    box('Upper receiver',(.040,0,.076),(.290,.046,.016),METAL,.002)
-    polygon('Pistol grip',[(-.080,.023),(-.030,.014),(-.055,-.102),(-.107,-.097)],.037,WOOD if ak else LEATHER,bevel=.003)
-    line('Trigger guard',[(-.029,0,.014),(.038,0,.014),(.034,0,-.018),(-.038,0,-.020)],.003,METAL)
-    box('Trigger',(.001,0,.000),(.006,.009,.024),SILVER,.001,rotation=.20,bone=4)
-    cylinder('Barrel',(.355,0,.050),.009,.400,METAL)
-    cylinder('Muzzle brake',(.568,0,.050),.014,.042,METAL)
-    cylinder('Muzzle bore',(.590,0,.050),.007,.001,BLACK)
-    for x in [.558,.570,.582]:
-        box('Muzzle vent',(x,-.014,.050),(.005,.001,.011),BLACK,0)
-        box('Muzzle vent',(x,.014,.050),(.005,.001,.011),BLACK,0)
-    cylinder('Buffer tube',(-.168,0,.053),.016,.200,METAL)
-    if ak:
-        polygon('Wood stock',[(-.120,.069),(-.346,.050),(-.342,-.079),(-.302,-.066),(-.185,.020),(-.120,.020)],.046,WOOD,bevel=.003)
-        box('Stock butt',(-.345,0,-.013),(.008,.052,.139),BLACK,.001)
-        box('Wood foregrip',(.267,0,.035),(.184,.053,.052),WOOD,.003)
-        box('Upper wood guard',(.262,0,.078),(.160,.048,.021),WOOD,.003)
-        cylinder('Gas tube',(.369,0,.083),.007,.204,METAL)
-        box('Gas block',(.423,0,.066),(.015,.028,.043),METAL)
-        line('Front sight tower',[(.504,-.007,.047),(.504,-.007,.111),(.504,.007,.111),(.504,.007,.047)],.0035,METAL)
-        box('Rear sight',(.108,0,.092),(.025,.021,.017),METAL,.001)
-        pumpkin(-.284,-.006,.025,.028)
-        pumpkin(.270,.035,.028,.018)
-        for x in [.204,.225,.246,.267,.288,.309]:
-            box('Guard slot',(x,-.028,.043),(.009,.001,.010),BLACK,0)
-            box('Guard slot',(x,.028,.043),(.009,.001,.010),BLACK,0)
-        start=len(objects)
-        polygon('Curved AK magazine',[(.061,.018),(.122,.018),(.127,-.039),(.160,-.109),(.195,-.149),(.158,-.173),(.114,-.135),(.078,-.067)],.039,METAL,bevel=.002)
-        for side in (-1,1):
-            for dx in [-.011,.0,.011]:
-                line('Magazine rib',[(.090+dx,side*.021,-.011),(.099+dx,side*.021,-.066),(.127+dx,side*.021,-.114),(.163+dx,side*.021,-.153)],.0015,accent)
-    else:
-        # A skeletal adjustable stock with a genuinely open centre.
-        line('Stock frame',[(-.144,0,.068),(-.344,0,.061),(-.350,0,-.078),(-.305,0,-.058),(-.225,0,.014),(-.144,0,.019)],.011,METAL)
-        box('Stock rubber pad',(-.350,0,-.008),(.012,.055,.157),BLACK,.002)
-        box('Cheek support',(-.246,0,.075),(.150,.048,.018),METAL,.003)
-        box('Handguard',(.285,0,.051),(.235,.052,.052),METAL,.003)
-        for x in [.192,.221,.250,.279,.308,.337,.366]:
-            for side in (-1,1):
-                box('Handguard inset',(x,side*.027,.052),(.017,.002,.011),BLACK,.002)
-                box('Soul vent edge',(x,side*.029,.045),(.014,.001,.0018),PURPLE,0)
-        for x in [i*.013+.025 for i in range(28)]:
-            box('Picatinny tooth',(x,0,.087),(.006,.030,.006),METAL,.0005)
-        box('Optic mount',(.045,0,.104),(.060,.030,.026),METAL,.002)
-        line('Reflex sight frame',[(.028,-.016,.116),(.028,-.016,.152),(.028,.016,.152),(.028,.016,.116)],.003,METAL)
-        box('Reflex soul dot',(.032,0,.133),(.002,.004,.004),PURPLE,.0003)
-        bat(-.248,.051,.026,.052)
-        bat(.085,.043,.028,.025)
-        start=len(objects)
-        polygon('AR magazine',[(.063,.018),(.124,.018),(.142,-.148),(.079,-.156)],.040,METAL,bevel=.002)
-        for side in (-1,1):
-            for x in [.084,.100,.116]:
-                line('Magazine soul groove',[(x,side*.022,.000),(x+.015,side*.022,-.135)],.0013,PURPLE)
-        box('Magazine base',(.111,0,-.154),(.069,.046,.010),METAL,.002,rotation=-.08)
-    for obj in objects[start:]:obj['magazine']=True
-    for x,z in [(-.071,.050),(-.021,.033),(.102,.060),(.150,.047)]:bolt(x,z)
-    box('Ejection port',(.086,-.027,.068),(.056,.002,.019),BLACK,.001)
-    box('Bolt',(.080,-.029,.068),(.040,.002,.008),SILVER,.001,bone=3)
-    box('Selector',(-.054,-.029,.041),(.023,.003,.004),SILVER,.001,rotation=.23)
-    return (.590,0,.050),(.092,0,.019)
-
-def axe():
-    cylinder('Charred haft',(0,0,.180),.019,.780,WOOD,'Z')
-    for z in [i*.018-.195 for i in range(18)]:
-        cylinder('Leather wrap',(0,0,z),.0215,.012,LEATHER,'Z')
-    for z in [-.210,.095,.170,.440,.520]:
-        cylinder('Forged collar',(0,0,z),.024,.024,METAL,'Z')
-        cylinder('Ember collar',(0,0,z+.003),.0246,.002,ORANGE,'Z')
-    skull(0,-.230,0,.033)
-    # Thick central head and separate sharpened cutting edge.
-    blade=[(-.038,.470),(.035,.470),(.114,.537),(.191,.570),(.241,.583),(.199,.521),(.196,.420),(.236,.335),(.178,.355),(.091,.408),(.035,.422),(-.038,.422)]
-    polygon('Crescent axe head',blade,.026,METAL,bevel=.002)
-    polygon('Honed cutting edge',[(.191,.570),(.241,.583),(.199,.521),(.196,.420),(.236,.335),(.214,.352),(.176,.423),(.177,.522)],.030,SILVER,bevel=.001)
-    polygon('Back spike',[(-.038,.476),(-.150,.515),(-.084,.434),(-.038,.422)],.023,METAL)
-    skull(.018,.462,0,.030)
-    for side in (-1,1):
-        line('Ember fracture',[(.052,side*.015,.454),(.091,side*.015,.480),(.123,side*.015,.453),(.168,side*.015,.470),(.190,side*.015,.443)],.0018,ORANGE)
-        line('Ember fracture',[(.110,side*.015,.464),(.105,side*.015,.421),(.152,side*.015,.404),(.183,side*.015,.378)],.0012,ORANGE)
-    pumpkin(.097,.448,.016,.026)
-    return None,None
-
-def scythe():
-    cylinder('Long charred shaft',(0,0,.330),.018,.1+1.40,WOOD,'Z')
-    for z in [-.390,-.120,.120,.420,.770,1.035]:
-        cylinder('Soul collar',(0,0,z),.024,.025,METAL,'Z')
-        cylinder('Soul collar light',(0,0,z+.004),.025,.003,PURPLE,'Z')
-    for lo,hi in [(-.32,-.17),(-.08,.08),(.31,.45)]:
-        for i in range(9):
-            z=lo+(hi-lo)*i/8
-            cylinder('Leather grip',(0,0,z),.0215,.012,LEATHER,'Z')
-    # Curved tapered blade, not a rectangular placeholder.
-    blade=[(-.025,.981),(.042,1.044),(.146,1.077),(.270,1.073),(.395,1.026),(.511,.936),(.604,.812),(.649,.662),
-           (.585,.738),(.496,.812),(.395,.868),(.277,.913),(.164,.941),(.050,.950)]
-    polygon('Reaper curved blade',blade,.017,METAL,bevel=.0015)
-    edge=[(.270,1.073),(.395,1.026),(.511,.936),(.604,.812),(.649,.662),(.585,.738),(.496,.812),(.395,.868),(.412,.894),(.521,.868),(.592,.798),(.565,.893),(.480,.979),(.366,1.036)]
-    polygon('Silver scythe edge',edge,.018,SILVER,bevel=.0005)
-    polygon('Back hook',[(-.025,1.018),(-.148,1.111),(-.130,1.018),(-.052,.949)],.021,METAL)
-    skull(.044,1.005,0,.049)
-    for side in (-1,1):
-        line('Soul blade runes',[(.125,side*.010,.987),(.177,side*.010,1.013),(.205,side*.010,.980),(.290,side*.010,1.019),(.344,side*.010,.985),(.411,side*.010,.973)],.002,PURPLE)
-        for z in [.17,.24,.58,.65,.86]:
-            line('Shaft rune',[(-.008,side*.019,z-.020),(.008,side*.019,z),(-.008,side*.019,z+.020)],.0012,PURPLE)
-    polygon('Tail spike',[(-.015,-.421),(.015,-.421),(.038,-.489),(-.009,-.461)],.021,METAL)
-    return None,None
-
 def element(parent, tag, text=None, **attributes):
     e=E.SubElement(parent,tag,{k:str(v) for k,v in attributes.items()})
     if text is not None:e.text=str(text)
@@ -291,6 +161,7 @@ def bones_for(kind,muzzle,clip):
                   ('Gun_VFX_Eject',28405,2,Vector((.014 if kind=='pistol' else .086,-.017 if kind=='pistol' else -.027,.038 if kind=='pistol' else .068)),Quaternion((.7071,0,0,-.7071)).normalized()),
                   ('WAPClip',1477,2,Vector(clip),Quaternion())]
         if kind!='pistol':bones.append(('Gun_GripL',18302,0,Vector((.255,0,.025)),Quaternion()))
+    if kind=='scythe':bones.append(('Gun_GripL',18302,0,Vector((0,0,.26)),Quaternion()))
     return bones
 
 def put_skeleton(root,bones):
@@ -309,19 +180,23 @@ def put_skeleton(root,bones):
 def export_xml(name,selected,bones=None,offset=Vector((0,0,0))):
     groups={}
     for obj in selected:
-        mesh=obj.data;mesh.calc_loop_triangles()
+        mesh=obj.data;mesh.calc_loop_triangles();mesh.calc_tangents(uvmap=mesh.uv_layers.active.name)
         normal_matrix=obj.matrix_world.to_3x3().inverted().transposed()
         material_index=obj['finish'];bone=obj['bone_index'] if bones else 0
         vertices=groups.setdefault(material_index,[])
         for tri in mesh.loop_triangles:
-            for vertex_index in tri.vertices:
-                p=obj.matrix_world @ mesh.vertices[vertex_index].co-offset
-                n=(normal_matrix @ tri.normal).normalized()
-                # Coordinates stay inside the appropriate original atlas tile.
-                a,b=(p.x,p.z) if abs(n.y)>.6 else ((p.x,p.y) if abs(n.z)>.6 else (p.y,p.z))
-                uv=((material_index%4+.10+.80*((a*2.4+.5)%1))/4,
-                    (material_index//4+.10+.80*((b*2.4+.5)%1))/2)
-                vertices.append((p,n,uv,bone))
+            a,b,c=(mesh.vertices[i].co for i in tri.vertices)
+            face_normal=(b-a).cross(c-a)
+            if face_normal.length_squared<1e-20:continue
+            for loop_index in tri.loops:
+                loop=mesh.loops[loop_index]
+                p=obj.matrix_world @ mesh.vertices[loop.vertex_index].co-offset
+                local_normal=mesh.corner_normals[loop_index].vector
+                if local_normal.length_squared<.5:local_normal=face_normal.normalized()
+                n=(normal_matrix @ local_normal).normalized()
+                uv=mesh.uv_layers.active.data[loop_index].uv
+                tangent=(normal_matrix @ loop.tangent).normalized()
+                vertices.append((p,n,(uv.x,1-uv.y),bone,(*tangent,loop.bitangent_sign)))
     allpoints=[row[0] for rows in groups.values() for row in rows]
     low=Vector(tuple(min(p[i] for p in allpoints) for i in range(3)))
     high=Vector(tuple(max(p[i] for p in allpoints) for i in range(3)))
@@ -330,43 +205,78 @@ def export_xml(name,selected,bones=None,offset=Vector((0,0,0))):
     vec(root,'BoundingBoxMin',low);vec(root,'BoundingBoxMax',high)
     for lod in ['High','Med','Low','Vlow']:
         element(root,'LodDist'+lod,value=9998);element(root,'Flags'+lod,value=1 if lod=='High' else 0)
-    sg=element(root,'ShaderGroup');shaders=element(sg,'Shaders')
-    used=sorted(groups)
+    shaders=element(element(root,'ShaderGroup'),'Shaders');used=sorted(groups)
     for mat in used:
-        shader=element(shaders,'Item');emissive=mat in (ORANGE,PURPLE)
-        element(shader,'Name','emissive' if emissive else 'default')
-        element(shader,'FileName','emissive.sps' if emissive else 'default.sps');element(shader,'RenderBucket',value=0)
-        params=element(shader,'Parameters');d=element(params,'Item',name='DiffuseSampler',type='Texture');element(d,'Name','hw_finish')
-        element(params,'Item',name='matMaterialColorScale',type='Vector',x=1,y=0,z=0,w=1)
-        if emissive:element(params,'Item',name='emissiveMultiplier',type='Vector',x=1.4,y=0,z=0,w=0)
-        else:
-            for key,val in [('HardAlphaBlend',(1,0,0,0)),('useTessellation',(0,0,0,0)),('wetnessMultiplier',(0,0,0,0)),('globalAnimUV1',(0,1,0,0)),('globalAnimUV0',(1,0,0,0))]:
-                element(params,'Item',name=key,type='Vector',**dict(zip(('x','y','z','w'),val)))
+        info=MATERIALS[mat];material_name=info['name'];emissive=info['emissive']
+        shader=element(shaders,'Item');preset='emissive' if emissive else 'normal_spec'
+        element(shader,'Name',preset);element(shader,'FileName',preset+'.sps');element(shader,'RenderBucket',value=0)
+        params=element(shader,'Parameters')
+        for sampler,suffix in ([('DiffuseSampler','d')] if emissive else [('DiffuseSampler','d'),('BumpSampler','n'),('SpecSampler','s')]):
+            item=element(params,'Item',name=sampler,type='Texture');element(item,'Name','hw_'+material_name+'_'+suffix)
+        scalars={'emissiveMultiplier':.7} if emissive else {'HardAlphaBlend':1,'useTessellation':0,'wetnessMultiplier':.15,'bumpiness':.35,'specularIntensityMult':.85,'specularFalloffMult':110 if info['metallic']>.5 else 35,'specularFresnel':.65}
+        for key,value in scalars.items():element(params,'Item',name=key,type='Vector',x=value,y=0,z=0,w=0)
+        if not emissive:element(params,'Item',name='specMapIntMask',type='Vector',x=1,y=0,z=0,w=0)
+        else:element(params,'Item',name='matMaterialColorScale',type='Vector',x=1,y=0,z=0,w=1)
     if bones:put_skeleton(root,bones)
     model=element(element(root,'DrawableModelsHigh'),'Item')
     for key,val in [('RenderMask',255),('Flags',1 if bones else 0),('HasSkin',1 if bones else 0),('BoneIndex',0),('Unknown1',len(bones) if bones else 0)]:element(model,key,value=val)
-    geometries=element(model,'Geometries')
+    geometries=element(model,'Geometries');geocount=0;vertices_count=0
     for shader_index,mat in enumerate(used):
-        rows=groups[mat]
-        assert len(rows)<65536, f'Too many vertices for 16-bit GTA indices: {name}'
-        g=element(geometries,'Item');element(g,'ShaderIndex',value=shader_index)
-        vec(g,'BoundingBoxMin',tuple(min(r[0][i] for r in rows) for i in range(3)),0)
-        vec(g,'BoundingBoxMax',tuple(max(r[0][i] for r in rows) for i in range(3)),0)
-        if bones:element(g,'BoneIDs',', '.join(str(i) for i in range(len(bones))))
-        vb=element(g,'VertexBuffer');element(vb,'Flags',value=0);layout=element(vb,'Layout',type='GTAV1')
-        for key in (['Position','BlendWeights','BlendIndices','Normal','Colour0','TexCoord0'] if bones else ['Position','Normal','Colour0','TexCoord0']):element(layout,key)
-        lines=[]
-        for p,n,uv,bone in rows:
-            parts=[' '.join(f'{v:.8g}' for v in p)]
-            if bones:parts += ['255 0 0 0',f'{bone} 0 0 0']
-            parts += [' '.join(f'{v:.8g}' for v in n),'255 255 255 255',' '.join(f'{v:.8g}' for v in uv)]
-            lines.append('   '.join(parts))
-        element(vb,'Data','\n'+'\n'.join(lines)+'\n')
-        ib=element(g,'IndexBuffer');element(ib,'Data','\n'+' '.join(str(i) for i in range(len(rows)))+'\n')
-    put_collision(root,low,high)
-    E.indent(root)
+        allrows=groups[mat]
+        # Split before 16-bit index overflow. Dedupe loop tuples within each chunk.
+        for start in range(0,len(allrows),54000):
+            lookup={};rows=[];indices=[]
+            for p,n,uv,bone,tangent in allrows[start:start+54000]:
+                key=tuple(round(v,7) for v in (*p,*n,*uv,bone,*tangent))
+                if key not in lookup:lookup[key]=len(rows);rows.append((p,n,uv,bone,tangent))
+                indices.append(lookup[key])
+            assert len(rows)<65536
+            geocount+=1;vertices_count+=len(rows)
+            g=element(geometries,'Item');element(g,'ShaderIndex',value=shader_index)
+            vec(g,'BoundingBoxMin',tuple(min(r[0][i] for r in rows) for i in range(3)),0)
+            vec(g,'BoundingBoxMax',tuple(max(r[0][i] for r in rows) for i in range(3)),0)
+            if bones:element(g,'BoneIDs',', '.join(str(i) for i in range(len(bones))))
+            vb=element(g,'VertexBuffer');element(vb,'Flags',value=0);layout=element(vb,'Layout',type='GTAV1')
+            keys=['Position']+(['BlendWeights','BlendIndices'] if bones else [])+['Normal','Colour0','TexCoord0','Tangent']
+            for key in keys:element(layout,key)
+            lines=[]
+            for p,n,uv,bone,tangent in rows:
+                parts=[' '.join(f'{v:.8g}' for v in p)]
+                if bones:parts+=['255 0 0 0',f'{bone} 0 0 0']
+                parts+=[' '.join(f'{v:.8g}' for v in n),'255 255 255 255',' '.join(f'{v:.8g}' for v in uv),' '.join(f'{v:.8g}' for v in tangent)]
+                lines.append('   '.join(parts))
+            element(vb,'Data','\n'+'\n'.join(lines)+'\n');element(element(g,'IndexBuffer'),'Data','\n'+' '.join(str(i) for i in indices)+'\n')
+    put_collision(root,low,high);E.indent(root)
     E.ElementTree(root).write(XML/(name+'.ydr.xml'),encoding='UTF-8',xml_declaration=True)
-    return {'model':name,'triangles':len(allpoints)//3,'materials':len(used),'bones':len(bones) if bones else 0,'min':list(low),'max':list(high)}
+    return {'model':name,'triangles':len(allpoints)//3,'vertices':vertices_count,'geometries':geocount,'materials':len(used),'bones':len(bones) if bones else 0,'smooth_normals':True,'tangent_space':True,'min':list(low),'max':list(high)}
+
+def add_lods(model,selected,bones,offset=Vector((0,0,0))):
+    high_file=XML/(model+'.ydr.xml');root=E.parse(high_file).getroot()
+    high_names=[n.findtext("Parameters/Item[@name='DiffuseSampler']/Name") for n in root.findall('ShaderGroup/Shaders/Item')]
+    counts={}
+    for level,ratio in [('Medium',.40),('Low',.14)]:
+        copies=[]
+        try:
+            for original in selected:
+                duplicate=original.copy();duplicate.data=original.data.copy();bpy.context.collection.objects.link(duplicate)
+                copies.append(duplicate);bpy.context.view_layer.objects.active=duplicate
+                if len(duplicate.data.polygons)>120 and duplicate['finish'] not in (2,3):
+                    modifier=duplicate.modifiers.new('Shipping LOD','DECIMATE');modifier.ratio=ratio
+                    bpy.ops.object.modifier_apply(modifier=modifier.name)
+                tri=duplicate.modifiers.new('LOD ngons','TRIANGULATE');tri.min_vertices=5
+                if hasattr(tri,'keep_custom_normals'):tri.keep_custom_normals=True
+                bpy.ops.object.modifier_apply(modifier=tri.name)
+            name=model+'__'+level.lower();info=export_xml(name,copies,bones,offset);counts[level]=info['triangles']
+            lod_file=XML/(name+'.ydr.xml');lod_root=E.parse(lod_file).getroot()
+            names=[n.findtext("Parameters/Item[@name='DiffuseSampler']/Name") for n in lod_root.findall('ShaderGroup/Shaders/Item')]
+            node=lod_root.find('DrawableModelsHigh');node.tag='DrawableModels'+level
+            for index in node.findall('.//ShaderIndex'):index.set('value',str(high_names.index(names[int(index.get('value'))])))
+            root.append(node);lod_file.unlink()
+        finally:
+            for duplicate in copies:bpy.data.objects.remove(duplicate,do_unlink=True)
+    for key,value in [('LodDistHigh',35),('LodDistMed',90),('LodDistLow',250),('FlagsMed',1),('FlagsLow',1)]:root.find(key).set('value',str(value))
+    E.indent(root);E.ElementTree(root).write(high_file,encoding='UTF-8',xml_declaration=True)
+    return counts
 
 def put_collision(root,low,high):
     center=(low+high)/2;size=high-low;half=size/2
@@ -408,15 +318,35 @@ def make_armature(name,bones,selected):
 
 def uv_map(obj):
     mesh=obj.data
-    while mesh.uv_layers: mesh.uv_layers.remove(mesh.uv_layers[0])
+    for poly in mesh.polygons:poly.use_smooth=True
+    mesh.set_sharp_from_angle(angle=.65)
+    bpy.context.view_layer.objects.active=obj
+    modifier=obj.modifiers.new('Area-weighted smooth shading','WEIGHTED_NORMAL');modifier.keep_sharp=True;modifier.weight=50
+    bpy.ops.object.modifier_apply(modifier=modifier.name)
+    triangulate=obj.modifiers.new('Triangulate ngons for tangent export','TRIANGULATE');triangulate.min_vertices=5
+    if hasattr(triangulate,'keep_custom_normals'):triangulate.keep_custom_normals=True
+    bpy.ops.object.modifier_apply(modifier=triangulate.name)
+    repaired=[]
+    for index,normal in enumerate(mesh.corner_normals):
+        value=normal.vector.copy()
+        if value.length_squared<.5:
+            value=mesh.vertices[mesh.loops[index].vertex_index].normal.copy()
+            if value.length_squared<.5:value=Vector((0,0,1))
+        repaired.append(value.normalized())
+    mesh.normals_split_custom_set(repaired)
+    # A UV island per projection face; no coordinate modulo and no colour atlas.
+    while mesh.uv_layers:mesh.uv_layers.remove(mesh.uv_layers[0])
     layer=mesh.uv_layers.new(name='UVMap');layer.active_render=True
-    mat=obj['finish']
+    coords=[v.co for v in mesh.vertices]
+    low=[min(p[i] for p in coords) for i in range(3)];high=[max(p[i] for p in coords) for i in range(3)]
+    span=[max(.000001,high[i]-low[i]) for i in range(3)]
     for poly in mesh.polygons:
-        worldnormal=obj.matrix_world.to_3x3()@poly.normal
+        axis=max(range(3),key=lambda i:abs(poly.normal[i]))
+        axes=[i for i in range(3) if i!=axis]
         for index in poly.loop_indices:
-            p=obj.matrix_world@mesh.vertices[mesh.loops[index].vertex_index].co
-            a,b=(p.x,p.z) if abs(worldnormal.y)>.6 else ((p.x,p.y) if abs(worldnormal.z)>.6 else (p.y,p.z))
-            layer.data[index].uv=((mat%4+.10+.80*((a*2.4+.5)%1))/4,1-(mat//4+.10+.80*((b*2.4+.5)%1))/2)
+            point=mesh.vertices[mesh.loops[index].vertex_index].co
+            u=(point[axes[0]]-low[axes[0]])/span[axes[0]];v=(point[axes[1]]-low[axes[1]])/span[axes[1]]
+            layer.data[index].uv=(.02+.96*u,.02+.96*v)
 
 def render(name,selected):
     pts=[o.matrix_world@v.co for o in selected for v in o.data.vertices]
@@ -426,12 +356,12 @@ def render(name,selected):
     camera=bpy.context.object;camera.rotation_euler=(center-camera.location).to_track_quat('-Z','Y').to_euler()
     camera.data.type='ORTHO';camera.data.ortho_scale=max(width,height*1.5)*1.20
     scene=bpy.context.scene;scene.camera=camera
-    scene.render.engine='CYCLES';scene.cycles.samples=40;scene.cycles.use_denoising=False
+    scene.render.engine='CYCLES';scene.cycles.samples=64;scene.cycles.use_denoising=False
     scene.render.resolution_x=1200;scene.render.resolution_y=800;scene.render.resolution_percentage=100
     scene.render.image_settings.file_format='PNG';scene.render.image_settings.color_mode='RGBA';scene.render.film_transparent=True
-    scene.world.color=(.18,.18,.18)
-    scene.view_settings.view_transform='AgX'
-    for loc,power,colour in [(Vector((-.6,-1.5,1.5)),500,(.72,.82,1)),(Vector((.8,1,1)),700,(.9,.6,.35)),(Vector((0,-1,-.5)),180,(.6,.65,.85))]:
+    scene.world.color=(.025,.025,.025)
+    scene.view_settings.view_transform='AgX';scene.view_settings.look='AgX - Medium High Contrast'
+    for loc,power,colour in [(Vector((-.6,-1.5,1.5)),80,(.72,.82,1)),(Vector((.8,1,1)),110,(.9,.6,.35)),(Vector((0,-1,-.5)),35,(.6,.65,.85))]:
         bpy.ops.object.light_add(type='AREA',location=center+loc*max(.4,span))
         light=bpy.context.object;light.data.energy=power*max(.18,span)**2;light.data.shape='DISK';light.data.size=max(.4,span)
         light.data.color=colour;light.rotation_euler=(center-light.location).to_track_quat('-Z','Y').to_euler()
@@ -441,25 +371,28 @@ def render(name,selected):
     camera.data.ortho_scale=max(width,height)*1.20
     scene.render.filepath=str(ICONS/(name+'.png'));bpy.ops.render.render(write_still=True)
 
-SPECS=[('WEAPON_HW_EMBER','w_pi_hw_ember','pistol',pistol),
-       ('WEAPON_HW_REVENANT','w_ar_hw_revenant','ar',lambda:rifle(False)),
-       ('WEAPON_HW_PUMPKIN','w_ar_hw_pumpkin','ak',lambda:rifle(True)),
-       ('WEAPON_HW_REAPER_AXE','w_me_hw_reaper','axe',axe),
-       ('WEAPON_HW_SOUL_SCYTHE','w_me_hw_soul','scythe',scythe)]
+import model_design_v2
+BUILDERS=model_design_v2.builders(globals())
+SPECS=list(zip(['WEAPON_HW_EMBER','WEAPON_HW_REVENANT','WEAPON_HW_PUMPKIN','WEAPON_HW_REAPER_AXE','WEAPON_HW_SOUL_SCYTHE'],
+               ['w_pi_hw_ember','w_ar_hw_revenant','w_ar_hw_pumpkin','w_me_hw_reaper','w_me_hw_soul'],
+               ['pistol','ar','ak','axe','scythe'],BUILDERS))
 stats=[]
 bpy.context.preferences.filepaths.save_version=0
 for weapon,model,kind,builder in SPECS:
     bpy.ops.object.select_all(action='SELECT');bpy.ops.object.delete(use_global=False)
-    objects=[];mats=[material(i) for i in range(8)]
+    objects=[];mats=[material(i) for i in range(len(MATERIALS))]
     muzzle,clip=builder();bpy.context.view_layer.update()
     for obj in objects:uv_map(obj)
     bones=bones_for(kind,muzzle,clip)
     main=[o for o in objects if not o['magazine']]
     stats.append(export_xml(model,main,bones))
+    stats[-1]['lod_triangles']=add_lods(model,main,bones)
     magazines=[o for o in objects if o['magazine']]
     if magazines:
         for obj in magazines:obj['bone_index']=0
-        stats.append(export_xml(model+'_mag',magazines,[('AAPClip',0,-1,Vector((0,0,0)),Quaternion())],offset=Vector(clip)))
+        mag_bones=[('AAPClip',0,-1,Vector((0,0,0)),Quaternion())]
+        stats.append(export_xml(model+'_mag',magazines,mag_bones,offset=Vector(clip)))
+        stats[-1]['lod_triangles']=add_lods(model+'_mag',magazines,mag_bones,Vector(clip))
     rig=make_armature(model,bones,main)
     bpy.ops.object.select_all(action='DESELECT')
     for obj in objects+[rig]:obj.select_set(True)
@@ -468,7 +401,7 @@ for weapon,model,kind,builder in SPECS:
     for image in bpy.data.images:
         if image.source=='FILE':image.pack()
     bpy.ops.wm.save_as_mainfile(filepath=str(SRC/'blend'/(model+'.blend')))
-    render(weapon,objects)
+    if '--no-render' not in sys.argv:render(weapon,objects)
     print('BUILT',weapon,flush=True)
 (SRC/'model_stats.json').write_text(json.dumps(stats,indent=2))
 print('FINISHED: five original weapon sources and eight GTA drawables',flush=True)

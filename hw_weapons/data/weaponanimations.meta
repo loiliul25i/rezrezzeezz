@@ -671,7 +671,7 @@
           <MotionStrafingStealthClipSetHash>move_ped_strafing_stealth</MotionStrafingStealthClipSetHash>
           <MotionStrafingUpperBodyClipSetHash>move_strafe@melee_large_weapon_fps</MotionStrafingUpperBodyClipSetHash>
           <WeaponClipSetHash>weapons@first_person@aim_idle@generic@melee@large_wpn@bat@</WeaponClipSetHash>
-          <WeaponClipSetStreamedHash>weapons@first_person@aim_rng@generic@pistol@pistol_str</WeaponClipSetStreamedHash>
+          <WeaponClipSetStreamedHash />
           <WeaponClipSetHashInjured />
           <WeaponClipSetHashStealth />
           <WeaponClipSetHashHiCover />

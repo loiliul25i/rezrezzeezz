@@ -1054,18 +1054,18 @@
           <ReticuleScale value="1.000000" />
           <ReticuleStyleHash />
           <FirstPersonReticuleStyleHash />
-          <PickupHash>PICKUP_WEAPON_HAMMER</PickupHash>
+          <PickupHash>PICKUP_WEAPON_HATCHET</PickupHash>
           <MPPickupHash />
           <HumanNameHash>WT_HW_REAPER</HumanNameHash>
           <MovementModeConditionalIdle />
-          <StatName>HAMMER</StatName>
+          <StatName>HATCHET</StatName>
           <KnockdownCount value="-1" />
           <KillshotImpulseScale value="1.000000" />
           <NmShotTuningSet>Normal</NmShotTuningSet>
           <AttachPoints />
           <GunFeedBone />
           <TargetSequenceGroup />
-          <WeaponFlags>AllowMeleeBlock CarriedInHand ArmourPenetrating CanLockonOnFoot CanLockonInVehicle MeleeClub UsableOnFoot UsableClimbing UsableInCover DoesRevivableDamage AllowCloseQuarterKills HasLowCoverSwaps NoWheelStats QuitTransitionToIdleIntroOnWeaponChange DisableLeftHandIkWhenOnFoot UseFPSAimIK UseFPSSecondaryMotion</WeaponFlags>
+          <WeaponFlags>AllowMeleeBlock CarriedInHand ArmourPenetrating CanLockonOnFoot CanLockonInVehicle MeleeClub UsableOnFoot UsableClimbing UsableInCover DoesRevivableDamage AllowCloseQuarterKills HasLowCoverSwaps NoWheelStats QuitTransitionToIdleIntroOnWeaponChange DisableLeftHandIkWhenOnFoot</WeaponFlags>
           <TintSpecValues ref="TINT_DEFAULT" />
           <FiringPatternAliases ref="NULL" />
           <ReloadUpperBodyFixupExpressionData ref="default" />
@@ -1273,18 +1273,18 @@
           <ReticuleScale value="1.000000" />
           <ReticuleStyleHash />
           <FirstPersonReticuleStyleHash />
-          <PickupHash>PICKUP_WEAPON_BAT</PickupHash>
+          <PickupHash>PICKUP_WEAPON_BATTLEAXE</PickupHash>
           <MPPickupHash />
           <HumanNameHash>WT_HW_SOUL</HumanNameHash>
           <MovementModeConditionalIdle />
-          <StatName>BAT</StatName>
+          <StatName>BATTLEAXE</StatName>
           <KnockdownCount value="-1" />
           <KillshotImpulseScale value="1.000000" />
           <NmShotTuningSet>Normal</NmShotTuningSet>
           <AttachPoints />
           <GunFeedBone />
           <TargetSequenceGroup />
-          <WeaponFlags>AllowMeleeBlock CarriedInHand ArmourPenetrating CanLockonOnFoot CanLockonInVehicle TwoHanded MeleeClub UsableOnFoot UsableClimbing DoesRevivableDamage AllowCloseQuarterKills NoWheelStats UseFPSAimIK UseFPSSecondaryMotion AttachFPSLeftHandIKToRight UseFPSAimIK UseFPSSecondaryMotion</WeaponFlags>
+          <WeaponFlags>AllowMeleeBlock CarriedInHand ArmourPenetrating CanLockonOnFoot CanLockonInVehicle TwoHanded MeleeClub UsableOnFoot UsableClimbing DoesRevivableDamage AllowCloseQuarterKills NoWheelStats</WeaponFlags>
           <TintSpecValues ref="TINT_DEFAULT" />
           <FiringPatternAliases ref="NULL" />
           <ReloadUpperBodyFixupExpressionData ref="default" />
