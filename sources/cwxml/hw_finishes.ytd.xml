@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<TextureDictionary>
+  <Item>
+    <Name>hw_finish</Name>
+    <Usage>DIFFUSE</Usage>
+    <UsageFlags>0</UsageFlags>
+    <Format>D3DFMT_DXT5</Format>
+    <FileName>hw_finish.dds</FileName>
+    <Unk32 value="0" />
+    <ExtraFlags value="0" />
+    <Width value="1024" />
+    <Height value="512" />
+    <MipLevels value="11" />
+  </Item>
+</TextureDictionary>

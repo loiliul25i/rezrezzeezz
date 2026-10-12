@@ -1,0 +1,12 @@
+# Keep your existing ESX/oxmysql/ox_lib/ox_inventory configuration.
+# Place this AFTER ensure ox_inventory:
+ensure hw_weapons
+
+# Grant this to your existing admin ACE group (ESX group alone does not grant ACE).
+add_ace group.admin command.hw_give allow
+# Example only; replace the identifier with YOUR administrator's actual license:
+# add_principal identifier.license:YOUR_ADMIN_LICENSE group.admin
+
+# Server console: hw_give 1 all 60
+# In game as an ACE-authorized admin: /hw_give 1 all 60
+# Read-only client F8 command: hw_check

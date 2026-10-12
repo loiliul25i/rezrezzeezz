@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CWeaponModelInfo__InitDataList>
+  <InitDatas>
+    <Item>
+      <modelName>w_pi_hw_ember_mag</modelName>
+      <txdName>hw_finishes</txdName>
+      <ptfxAssetName>NULL</ptfxAssetName>
+      <lodDist value="150" />
+    </Item>
+    <Item>
+      <modelName>w_pi_hw_ember</modelName>
+      <txdName>hw_finishes</txdName>
+      <ptfxAssetName>NULL</ptfxAssetName>
+      <lodDist value="150" />
+    </Item>
+    <Item>
+      <modelName>w_ar_hw_revenant_mag</modelName>
+      <txdName>hw_finishes</txdName>
+      <ptfxAssetName>NULL</ptfxAssetName>
+      <lodDist value="150" />
+    </Item>
+    <Item>
+      <modelName>w_ar_hw_revenant</modelName>
+      <txdName>hw_finishes</txdName>
+      <ptfxAssetName>NULL</ptfxAssetName>
+      <lodDist value="150" />
+    </Item>
+    <Item>
+      <modelName>w_ar_hw_pumpkin_mag</modelName>
+      <txdName>hw_finishes</txdName>
+      <ptfxAssetName>NULL</ptfxAssetName>
+      <lodDist value="150" />
+    </Item>
+    <Item>
+      <modelName>w_ar_hw_pumpkin</modelName>
+      <txdName>hw_finishes</txdName>
+      <ptfxAssetName>NULL</ptfxAssetName>
+      <lodDist value="150" />
+    </Item>
+    <Item>
+      <modelName>w_me_hw_reaper</modelName>
+      <txdName>hw_finishes</txdName>
+      <ptfxAssetName>NULL</ptfxAssetName>
+      <lodDist value="150" />
+    </Item>
+    <Item>
+      <modelName>w_me_hw_soul</modelName>
+      <txdName>hw_finishes</txdName>
+      <ptfxAssetName>NULL</ptfxAssetName>
+      <lodDist value="150" />
+    </Item>
+  </InitDatas>
+</CWeaponModelInfo__InitDataList>

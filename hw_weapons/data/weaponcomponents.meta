@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CWeaponComponentInfoBlob>
+  <Infos>
+    <Item type="CWeaponComponentClipInfo">
+      <Name>COMPONENT_HW_EMBER_CLIP</Name>
+      <Model>w_pi_hw_ember_mag</Model>
+      <LocName>WCT_CLIP1</LocName>
+      <LocDesc>WCD_CLIP1</LocDesc>
+      <AttachBone>AAPClip</AttachBone>
+      <WeaponAttachBone>WAPClip</WeaponAttachBone>
+      <AccuracyModifier type="NULL" />
+      <DamageModifier type="NULL" />
+      <bShownOnWheel value="false" />
+      <CreateObject value="true" />
+      <HudDamage value="0" />
+      <HudSpeed value="0" />
+      <HudCapacity value="0" />
+      <HudAccuracy value="0" />
+      <HudRange value="0" />
+      <ClipSize value="12" />
+      <AmmoInfo />
+      <ReloadData ref="RELOAD_DEFAULT" />
+    </Item>
+    <Item type="CWeaponComponentClipInfo">
+      <Name>COMPONENT_HW_REVENANT_CLIP</Name>
+      <Model>w_ar_hw_revenant_mag</Model>
+      <LocName>WCT_CLIP1</LocName>
+      <LocDesc>WCD_CLIP1</LocDesc>
+      <AttachBone>AAPClip</AttachBone>
+      <WeaponAttachBone>WAPClip</WeaponAttachBone>
+      <AccuracyModifier type="NULL" />
+      <DamageModifier type="NULL" />
+      <bShownOnWheel value="false" />
+      <CreateObject value="true" />
+      <HudDamage value="0" />
+      <HudSpeed value="0" />
+      <HudCapacity value="0" />
+      <HudAccuracy value="0" />
+      <HudRange value="0" />
+      <ClipSize value="30" />
+      <AmmoInfo />
+      <ReloadData ref="RELOAD_DEFAULT" />
+    </Item>
+    <Item type="CWeaponComponentClipInfo">
+      <Name>COMPONENT_HW_PUMPKIN_CLIP</Name>
+      <Model>w_ar_hw_pumpkin_mag</Model>
+      <LocName>WCT_CLIP1</LocName>
+      <LocDesc>WCD_CLIP1</LocDesc>
+      <AttachBone>AAPClip</AttachBone>
+      <WeaponAttachBone>WAPClip</WeaponAttachBone>
+      <AccuracyModifier type="NULL" />
+      <DamageModifier type="NULL" />
+      <bShownOnWheel value="false" />
+      <CreateObject value="true" />
+      <HudDamage value="0" />
+      <HudSpeed value="0" />
+      <HudCapacity value="0" />
+      <HudAccuracy value="0" />
+      <HudRange value="0" />
+      <ClipSize value="30" />
+      <AmmoInfo />
+      <ReloadData ref="RELOAD_DEFAULT" />
+    </Item>
+  </Infos>
+  <InfoBlobName>HW_COMPONENTS</InfoBlobName>
+</CWeaponComponentInfoBlob>

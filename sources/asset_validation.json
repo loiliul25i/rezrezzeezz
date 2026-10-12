@@ -1,0 +1,65 @@
+{
+  "weapon_count": 5,
+  "drawables": 8,
+  "texture_dictionaries": 1,
+  "texture_mips": 11,
+  "native_roundtrip_checked": true,
+  "game_client_tested": false,
+  "total_stream_bytes": 1873193,
+  "files": [
+    {
+      "file": "hw_finishes.ytd",
+      "bytes": 260618,
+      "sha256": "d0de604713897e7f992e7bb1e28651caafdfb45dc0e1ad42ef8f99cde6343497",
+      "resource_version": 13
+    },
+    {
+      "file": "w_ar_hw_pumpkin.ydr",
+      "bytes": 156427,
+      "sha256": "118ea97ea9aa31fb15ea0c5fd93eee98cf7c79c40a1ccc0e89a9f68a6af3c8ee",
+      "resource_version": 165
+    },
+    {
+      "file": "w_ar_hw_pumpkin_mag.ydr",
+      "bytes": 139876,
+      "sha256": "1a5ff85ae980124da3778139bf20fd927b5d182baac722e6b0ee523ce1b6d3e7",
+      "resource_version": 165
+    },
+    {
+      "file": "w_ar_hw_revenant.ydr",
+      "bytes": 318169,
+      "sha256": "66c7c262ad522dd42ef9cf7e319a86b9c210e3937966c2cab87ea38abb1de240",
+      "resource_version": 165
+    },
+    {
+      "file": "w_ar_hw_revenant_mag.ydr",
+      "bytes": 40525,
+      "sha256": "0e0d9e4e9c774f71e50bdb28bf0d5398d145bb855ebfcf69f534ef4a855cdea2",
+      "resource_version": 165
+    },
+    {
+      "file": "w_me_hw_reaper.ydr",
+      "bytes": 357629,
+      "sha256": "32519050eb5e58bc74c30c06dc2b050066b78e78a5b47aec0908b64d73f08b13",
+      "resource_version": 165
+    },
+    {
+      "file": "w_me_hw_soul.ydr",
+      "bytes": 455396,
+      "sha256": "edbea98b0747954e922bbf5720f9701a980b675b1234b4d3ce5b58683cdf3cec",
+      "resource_version": 165
+    },
+    {
+      "file": "w_pi_hw_ember.ydr",
+      "bytes": 138785,
+      "sha256": "ef387c9cca040a75060070b990bd25655eaa6b49a0f2dd0428438329d6f2b9b1",
+      "resource_version": 165
+    },
+    {
+      "file": "w_pi_hw_ember_mag.ydr",
+      "bytes": 5768,
+      "sha256": "92316df9973cc46e9e2b7feab9af8b3b6bfc9755d5f71470335fad5ef3714ff4",
+      "resource_version": 165
+    }
+  ]
+}

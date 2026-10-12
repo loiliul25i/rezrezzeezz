@@ -1,0 +1,52 @@
+[
+  {
+    "name": "WEAPON_HW_EMBER",
+    "model": "w_pi_hw_ember",
+    "text": "WT_HW_EMBER",
+    "damage": 24,
+    "clip": 12,
+    "rate": 0.28,
+    "range": 90,
+    "spread": 1.5
+  },
+  {
+    "name": "WEAPON_HW_REVENANT",
+    "model": "w_ar_hw_revenant",
+    "text": "WT_HW_REVENANT",
+    "damage": 28,
+    "clip": 30,
+    "rate": 0.105,
+    "range": 220,
+    "spread": 2.2
+  },
+  {
+    "name": "WEAPON_HW_PUMPKIN",
+    "model": "w_ar_hw_pumpkin",
+    "text": "WT_HW_PUMPKIN",
+    "damage": 31,
+    "clip": 30,
+    "rate": 0.13,
+    "range": 200,
+    "spread": 3.2
+  },
+  {
+    "name": "WEAPON_HW_REAPER_AXE",
+    "model": "w_me_hw_reaper",
+    "text": "WT_HW_REAPER",
+    "damage": 30,
+    "clip": 0,
+    "rate": 0,
+    "range": 1.6,
+    "spread": 0
+  },
+  {
+    "name": "WEAPON_HW_SOUL_SCYTHE",
+    "model": "w_me_hw_soul",
+    "text": "WT_HW_SOUL",
+    "damage": 35,
+    "clip": 0,
+    "rate": 0,
+    "range": 1.8,
+    "spread": 0
+  }
+]
